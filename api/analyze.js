@@ -1,7 +1,7 @@
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenAI } from "@google/genai";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 export default async function handler(req, res) {
@@ -20,15 +20,11 @@ export default async function handler(req, res) {
       });
     }
 
-    const message = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1200,
-      system:
-        "You are an expert resume reviewer. Analyze resumes professionally and give practical, specific advice. Return valid JSON only.",
-      messages: [
-        {
-          role: "user",
-          content: `Analyze this resume and return JSON with exactly these fields:
+    const prompt = `
+Analyze this resume professionally.
+
+Return JSON with exactly these fields:
+
 {
   "summary": "short overall assessment",
   "strengths": ["strength 1", "strength 2", "strength 3"],
@@ -38,25 +34,18 @@ export default async function handler(req, res) {
 }
 
 Resume:
-${resume}`,
-        },
-      ],
+${resume}
+`;
+
+    const response = await ai.models.generateContent({
+    model: "gemini-3.7-flash",  
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+      },
     });
 
-    const text = message.content
-      .filter((item) => item.type === "text")
-      .map((item) => item.text)
-      .join("");
-
-    let analysis;
-
-    try {
-      analysis = JSON.parse(text);
-    } catch {
-      return res.status(502).json({
-        error: "AI returned an invalid response. Please try again.",
-      });
-    }
+    const analysis = JSON.parse(response.text);
 
     return res.status(200).json({
       analysis,
