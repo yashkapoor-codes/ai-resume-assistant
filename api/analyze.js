@@ -38,7 +38,7 @@ ${resume}
 `;
 
     const response = await ai.models.generateContent({
-    model: "gemini-3.7-flash",  
+    model: "gemini-3.6-flash",  
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -54,7 +54,8 @@ ${resume}
     console.error("Resume analysis error:", error);
 
     return res.status(500).json({
-      error: "Unable to analyze the resume right now. Please try again later.",
-    });
+error: "Unable to analyze the resume right now. Please try again later.",
+});
+
   }
 }
