@@ -1,16 +1,60 @@
-# React + Vite
+# AI Resume Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-powered resume analysis web application built for the FlyRank AI Capstone.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://ai-resume-assistant-lac.vercel.app
 
-## React Compiler
+## GitHub
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+https://github.com/yashkapoor-codes/ai-resume-assistant
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Paste resume content and analyze it with AI
+- AI-generated overall assessment
+- Resume strengths
+- Areas to improve
+- Missing keywords
+- Actionable improvement suggestions
+- Loading and error states
+- Responsive dark UI
+- Accessible form controls and keyboard focus states
+- Client-side validation
+- Automated component tests
+- Production deployment on Vercel
+
+## Tech Stack
+
+- React
+- Vite
+- JavaScript
+- Vercel Serverless Functions
+- Google Gemini API
+- Vitest
+- React Testing Library
+
+## AI Integration
+
+The application sends the resume to a secure serverless API endpoint:
+
+`POST /api/analyze`
+
+The serverless function uses Google's Gemini API and returns structured JSON containing:
+
+- summary
+- strengths
+- weaknesses
+- missingKeywords
+- suggestions
+
+The Gemini API key is stored as a server-side environment variable and is not exposed to the frontend.
+
+## Local Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yashkapoor-codes/ai-resume-assistant.git
+cd ai-resume-assistant
